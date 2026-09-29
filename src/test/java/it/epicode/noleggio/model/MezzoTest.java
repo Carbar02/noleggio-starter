@@ -1,8 +1,8 @@
 package it.epicode.noleggio.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MezzoTest {
 
@@ -59,4 +59,28 @@ class MezzoTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new Cliente("RSSNNA85M41H501Z", "Anna", "anna.mail.it"));
     }
+
+    //Scrivo i casi di test per gestire i seguenti criteri di accettazione: 
+    // // Criteri di accettazione
+    // 1: avvio contratto di noleggio di 7 giorni --> il sistema non applica uno sconto 
+    @Test 
+    void noScontoPerSetteGiorni() {
+        Scooter s = new Scooter("SC777XX", "Vespa", 25);
+        assertEquals(175.0, s.calcolaCosto(7), 0.001);   // 7 * 25 = 175, nessuno sconto
+    }
+    // 2:avvio contratto di noleggio in un range di 8 o più giorni --> il sistema applica uno sconto
+    @Test
+    void scontoPerOttoGiorni() {
+        Scooter s = new Scooter("SC777XX", "Vespa", 25);
+        assertEquals(160.0, s.calcolaCosto(8), 0.001);   // 200 - 20%
+    }
+    // 3: noleggio annullato l'ottavo giorno
+    @Test
+    void annullamentoOttavoGiorno() {
+        Scooter s = new Scooter("SC777XX", "Vespa", 25);
+        s.noleggia();
+        s.annullaNoleggio();
+        assertEquals(0.0, s.calcolaCosto(0), 0.001);   // noleggio annullato, costo 0
+    }
+
 }
