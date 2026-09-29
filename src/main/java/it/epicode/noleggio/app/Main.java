@@ -36,7 +36,7 @@ public class Main {
         System.out.println("== Noleggi");
         try {
             System.out.println(agenzia.noleggia("AB123CD", anna, 3));
-            System.out.println(agenzia.noleggia("SC777XX", anna, 8));
+            System.out.println(agenzia.noleggia("SC777XX", anna, 6));
             agenzia.noleggia("AB123CD", anna, 2);           // gia' noleggiata
         } catch (MezzoNonDisponibileException e) {
             System.out.println("Errore: " + e.getMessage());
